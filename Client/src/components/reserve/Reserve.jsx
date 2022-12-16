@@ -95,20 +95,6 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(dates);
-    console.log({
-      ...inputs,
-      user_id: userData._id,
-      username: userData.username,
-      hotel_id: hotelId,
-      hotelName: hotelName,
-      room: roomNumbers,
-      dateStart: dates[0].startDate,
-      dateEnd: dates[0].endDate,
-      price: totalPrice,
-      payment: e.target.payment.value,
-      status: "Booked",
-    });
 
     try {
       let res = await axios.post("http://localhost:5000/api/transactions", {
@@ -118,8 +104,8 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
         hotel_id: hotelId,
         hotelName: hotelName,
         room: roomNumbers,
-        dateStart: dates.startDate,
-        dateEnd: dates.endDate,
+        dateStart: dates[0].startDate,
+        dateEnd: dates[0].endDate,
         price: totalPrice,
         payment: e.target.payment.value,
         status: "Booked",
