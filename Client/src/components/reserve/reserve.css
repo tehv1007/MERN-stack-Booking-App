@@ -32,10 +32,10 @@
   width: 80%;
 }
 
-.payment-container {
+.reserve-now {
   display: grid;
-  grid-template-columns: 30% 20% 50%;
-  align-items: center;
+  grid-template-columns: 30% 30% 40%;
+  align-items: baseline;
 }
 
 .room-list {
@@ -106,5 +106,5 @@
   cursor: pointer;
   border-radius: 5px;
   width: 100%;
-  margin-top: 20px;
+  margin-left: 20px;
 }

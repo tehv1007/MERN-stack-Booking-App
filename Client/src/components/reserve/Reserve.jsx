@@ -65,7 +65,7 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
         : selectedRooms.filter((item) => item !== value)
     );
   };
-  console.log(selectedRooms);
+  // console.log(selectedRooms);
 
   let roomPriceSelected = [];
   let roomNumbers = [];
@@ -117,6 +117,37 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
       console.log(err);
     }
 
+    // try {
+    //   await axios
+    //     .post("http://localhost:5000/api/transactions", {
+    //       user_id: userData._id,
+    //       username: userData.username,
+    //       hotel_id: hotelId,
+    //       hotelName: hotelName,
+    //       room: roomNumbers,
+    //       dateStart: dates.startDate,
+    //       dateEnd: dates.endDate,
+    //       price: totalPrice,
+    //       payment: e.target.payment.value,
+    //       status: "Booked",
+    //     })
+    //     .then((response) => {
+    //       setInputs(response.data);
+    //     });
+    //   alert("Transaction has been created successfully!");
+    //   navigate("/transactions");
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    // try {
+    //   await axios.post("http://localhost:5000/api/transactions", inputs);
+    //   alert("Transaction has been created successfully!");
+    //   navigate("/transactions");
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
     try {
       await Promise.all(
         selectedRooms.map((roomId) => {
@@ -131,7 +162,9 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
       );
       setOpen(false);
       navigate("/transactions");
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <form onSubmit={handleClick}>
@@ -217,10 +250,10 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
             </div>
           </div>
           <div className="payment-container">
-            <div className="row">
-              <h3 className="bill">
-                Total Bill: ${totalPrice} ({days} night)
-              </h3>
+            <h4 className="bill">
+              Total Bill: ${totalPrice} ({days} night)
+            </h4>
+            <div className="reserve-now">
               <div className="payment">
                 <select className="form-select" defaultValue="" name="payment">
                   <option value="Payment">Select Payment Method</option>
@@ -228,11 +261,11 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
                   <option value="credit">Credit Card</option>
                 </select>
               </div>
-            </div>
-            <div className="btn" xs={3}>
-              <button type="submit" color="primary" className="mt-3 rButton">
-                Reserve Now
-              </button>
+              <div className="btn" xs={3}>
+                <button type="submit" color="primary" className=" rButton">
+                  Reserve Now
+                </button>
+              </div>
             </div>
           </div>
         </div>
