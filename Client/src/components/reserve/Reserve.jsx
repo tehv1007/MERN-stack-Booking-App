@@ -95,65 +95,43 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
-    // setInputs({
-    //   user_id: userData._id,
-    //   username: userData.username,
-    //   hotel_id: hotelId,
-    //   hotelName: hotelName,
-    //   room: roomNumbers,
-    //   dateStart: dates.startDate,
-    //   dateEnd: dates.endDate,
-    //   price: totalPrice,
-    //   payment: e.target.payment.value,
-    //   status: "Booked",
-    // });
-
-    // console.log(inputs);
-
-    // try {
-    //   await axios.post("http://localhost:5000/api/transactions", {
-    //     ...inputs,
-    //     payment: e.target.payment.value,
-    //   });
-    //   alert("Transaction has been created successfully!");
-    //   navigate("/transactions");
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    console.log(dates);
+    console.log({
+      ...inputs,
+      user_id: userData._id,
+      username: userData.username,
+      hotel_id: hotelId,
+      hotelName: hotelName,
+      room: roomNumbers,
+      dateStart: dates[0].startDate,
+      dateEnd: dates[0].endDate,
+      price: totalPrice,
+      payment: e.target.payment.value,
+      status: "Booked",
+    });
 
     try {
-      await axios
-        .post("http://localhost:5000/api/transactions", {
-          ...inputs,
-          user_id: userData._id,
-          username: userData.username,
-          hotel_id: hotelId,
-          hotelName: hotelName,
-          room: roomNumbers,
-          dateStart: dates.startDate,
-          dateEnd: dates.endDate,
-          price: totalPrice,
-          payment: e.target.payment.value,
-          status: "Booked",
-        })
-        .then((response) => {
-          console.log(response);
-          setInputs(response.data);
-        });
+      let res = await axios.post("http://localhost:5000/api/transactions", {
+        ...inputs,
+        user_id: userData._id,
+        username: userData.username,
+        hotel_id: hotelId,
+        hotelName: hotelName,
+        room: roomNumbers,
+        dateStart: dates.startDate,
+        dateEnd: dates.endDate,
+        price: totalPrice,
+        payment: e.target.payment.value,
+        status: "Booked",
+      });
+
+      console.log(res.data);
+      setInputs(res.data);
       alert("Transaction has been created successfully!");
       navigate("/transactions");
     } catch (err) {
       console.log(err);
     }
-
-    // try {
-    //   await axios.post("http://localhost:5000/api/transactions", inputs);
-    //   alert("Transaction has been created successfully!");
-    //   navigate("/transactions");
-    // } catch (err) {
-    //   console.log(err);
-    // }
 
     try {
       await Promise.all(
