@@ -1,6 +1,6 @@
 import "./reserve.css";
 import useFetch from "../../hooks/useFetch";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
@@ -96,49 +96,56 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    setInputs({
-      user_id: userData._id,
-      username: userData.username,
-      hotel_id: hotelId,
-      hotelName: hotelName,
-      room: roomNumbers,
-      dateStart: dates.startDate,
-      dateEnd: dates.endDate,
-      price: totalPrice,
-      payment: e.target.payment.value,
-      status: "Booked",
-    });
+    // setInputs({
+    //   user_id: userData._id,
+    //   username: userData.username,
+    //   hotel_id: hotelId,
+    //   hotelName: hotelName,
+    //   room: roomNumbers,
+    //   dateStart: dates.startDate,
+    //   dateEnd: dates.endDate,
+    //   price: totalPrice,
+    //   payment: e.target.payment.value,
+    //   status: "Booked",
+    // });
 
-    try {
-      await axios.post("http://localhost:5000/api/transactions", inputs);
-      alert("Transaction has been created successfully!");
-      navigate("/transactions");
-    } catch (err) {
-      console.log(err);
-    }
+    // console.log(inputs);
 
     // try {
-    //   await axios
-    //     .post("http://localhost:5000/api/transactions", {
-    //       user_id: userData._id,
-    //       username: userData.username,
-    //       hotel_id: hotelId,
-    //       hotelName: hotelName,
-    //       room: roomNumbers,
-    //       dateStart: dates.startDate,
-    //       dateEnd: dates.endDate,
-    //       price: totalPrice,
-    //       payment: e.target.payment.value,
-    //       status: "Booked",
-    //     })
-    //     .then((response) => {
-    //       setInputs(response.data);
-    //     });
+    //   await axios.post("http://localhost:5000/api/transactions", {
+    //     ...inputs,
+    //     payment: e.target.payment.value,
+    //   });
     //   alert("Transaction has been created successfully!");
     //   navigate("/transactions");
     // } catch (err) {
     //   console.log(err);
     // }
+
+    try {
+      await axios
+        .post("http://localhost:5000/api/transactions", {
+          ...inputs,
+          user_id: userData._id,
+          username: userData.username,
+          hotel_id: hotelId,
+          hotelName: hotelName,
+          room: roomNumbers,
+          dateStart: dates.startDate,
+          dateEnd: dates.endDate,
+          price: totalPrice,
+          payment: e.target.payment.value,
+          status: "Booked",
+        })
+        .then((response) => {
+          console.log(response);
+          setInputs(response.data);
+        });
+      alert("Transaction has been created successfully!");
+      navigate("/transactions");
+    } catch (err) {
+      console.log(err);
+    }
 
     // try {
     //   await axios.post("http://localhost:5000/api/transactions", inputs);
