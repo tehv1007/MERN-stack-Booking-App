@@ -1,5 +1,6 @@
 {
-  "name": "lamadmin",
+  "name": "admin",
+  "homepage": "https://hotel-booking-admin-app.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

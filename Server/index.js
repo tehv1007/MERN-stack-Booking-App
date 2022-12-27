@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: __dirname + "/.env" });
+}
 const authRoute = require("./routes/auth");
 const usersRoute = require("./routes/users");
 const hotelsRoute = require("./routes/hotels");
@@ -52,3 +55,11 @@ app.listen(5000, () => {
   connect();
   console.log("Connected to backend!");
 });
+
+// static files (build of your frontend)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../Client", "build")));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../Client", "build", "index.html"));
+  });
+}

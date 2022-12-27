@@ -8,7 +8,7 @@ import Transaction from "./pages/transaction/Transaction";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/hotels" element={<List />} />
